@@ -1,0 +1,8 @@
+{
+  "name": "Dongli Village AI Guide",
+  "description": "An AI-powered tour guide for Dongli Village, offering interactive routes, attraction details, and an offline-capable RAG assistant. Built for intranet usage with an admin panel for knowledge updates.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
