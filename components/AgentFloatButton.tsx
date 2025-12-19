@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { AgentIcon, SendIcon, CloseIcon } from './icons';
 import { ragService } from '../services/ragService';
@@ -42,11 +41,20 @@ export default function AgentFloatButton() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
+      <style>{`
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.3s ease-out forwards;
+        }
+      `}</style>
       {isOpen && (
         <div className="absolute bottom-0 right-0 w-80 sm:w-96 bg-white rounded-xl shadow-2xl flex flex-col h-[70vh] max-h-[500px] border border-gray-200 animate-fade-in-up">
           <header className="flex items-center justify-between p-3 border-b bg-gray-50 rounded-t-xl">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 text-blue-500"><AgentIcon /></div>
+              <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-100 p-0.5"><AgentIcon variant="A" /></div>
               <span className="font-semibold text-gray-700">AI 讲解官</span>
             </div>
             <button onClick={() => setIsOpen(false)} className="p-1 rounded-full hover:bg-gray-200 text-gray-500">
@@ -57,7 +65,7 @@ export default function AgentFloatButton() {
           <div className="flex-1 p-4 overflow-y-auto space-y-4">
             {messages.map((msg, index) => (
               <div key={index} className={`flex items-end gap-2 ${msg.type === 'user' ? 'justify-end' : ''}`}>
-                {msg.type === 'bot' && <div className="w-8 h-8 text-blue-500 flex-shrink-0"><AgentIcon /></div>}
+                {msg.type === 'bot' && <div className="w-8 h-8 flex-shrink-0 bg-blue-100 rounded-full p-0.5"><AgentIcon variant="A" /></div>}
                 <div className={`max-w-[80%] p-3 rounded-2xl ${msg.type === 'user' ? 'bg-blue-500 text-white rounded-br-lg' : 'bg-gray-200 text-gray-800 rounded-bl-lg'}`}>
                   {msg.image && (
                     <img src={msg.image} alt="Related content" className="rounded-lg mb-2 w-full object-cover" />
@@ -68,7 +76,7 @@ export default function AgentFloatButton() {
             ))}
             {isLoading && (
               <div className="flex items-end gap-2">
-                <div className="w-8 h-8 text-blue-500 flex-shrink-0"><AgentIcon /></div>
+                <div className="w-8 h-8 flex-shrink-0 bg-blue-100 rounded-full p-0.5"><AgentIcon variant="A" /></div>
                 <div className="p-3 rounded-2xl bg-gray-200 text-gray-800 rounded-bl-lg">
                     <div className="flex items-center justify-center space-x-1">
                         <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse [animation-delay:-0.3s]"></div>
@@ -99,10 +107,10 @@ export default function AgentFloatButton() {
       )}
       {!isOpen && (
         <button
-          className="w-16 h-16 rounded-full bg-blue-500 text-white shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform"
+          className="w-16 h-16 rounded-full bg-blue-500 text-white shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform overflow-hidden p-1"
           onClick={() => setIsOpen(true)}
         >
-          <div className="w-10 h-10"><AgentIcon /></div>
+          <AgentIcon variant="A" />
         </button>
       )}
     </div>

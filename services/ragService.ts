@@ -4,7 +4,7 @@ import { initialRagData, allPoisMap } from '../data/mockData';
 
 const DB_NAME = 'dongli-rag-db';
 const STORE_NAME = 'qa_store';
-const DB_VERSION = 3; // Bumped version to reload new Dongli Village data
+const DB_VERSION = 4; // Bumped version to reload new Dongli Village data with historical figures
 
 class RagService {
   private db: IDBPDatabase | null = null;
@@ -22,7 +22,7 @@ class RagService {
       },
     });
 
-    // Load initial data if the store is empty
+    // Load initial data if the store is empty or after an upgrade
     const count = await this.db.count(STORE_NAME);
     if (count === 0) {
       console.log('Initializing RAG database with Dongli Village data...');
@@ -70,7 +70,7 @@ class RagService {
       return { answer: bestMatch.answer, image: imageUrl };
     }
 
-    return { answer: '这个问题我还不会，您可以试着问问关于“纪念馆”、“民宿”或者“特产”的问题～' };
+    return { answer: '这个问题我还不会，您可以试着问问关于“纪念馆”、“民宿”、“特产”或者“郑玉指”的问题～' };
   }
 
   // Called from Admin Panel

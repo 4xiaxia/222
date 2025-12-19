@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'wouter';
 import { routes, allPoisMap } from '../data/mockData';
 import type { RouteInfo } from '../types';
-import { LocationIcon, ChevronDownIcon, ChevronRightIcon } from '../components/icons';
+import { LocationIcon, ChevronDownIcon, ChevronRightIcon, AgentIcon } from '../components/icons';
 
 // Define component outside to prevent re-creation on render
 const RouteCard: React.FC<{ route: RouteInfo, onSelect: (id: string) => void }> = ({ route, onSelect }) => {
@@ -48,7 +48,6 @@ const RouteCard: React.FC<{ route: RouteInfo, onSelect: (id: string) => void }> 
 export default function Home() {
   const [, setLocation] = useLocation();
   // Directly set routes since data is imported and available synchronously.
-  // This avoids the flashing effect of a loading skeleton.
   const [routesData] = useState<RouteInfo[]>(routes);
 
   const handleSelectAttraction = (id: string) => {
@@ -56,21 +55,30 @@ export default function Home() {
   };
 
   return (
-    <div className="p-4 bg-gray-50 min-h-screen pb-20">
-      <header className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-2">
-            <div className="text-blue-600"><LocationIcon /></div>
-            <h1 className="text-xl font-bold text-gray-800">东里村智能体</h1>
+    <div className="bg-gray-50 min-h-screen pb-20">
+      {/* Hero Section with Village Background */}
+      <div className="relative h-64 overflow-hidden">
+        <img 
+          src="http://t61i76pjk.hn-bkt.clouddn.com/dongli/pic/640.webp?e=1763669843&token=KPjDX5JKdPj4uqjNpBSO-Eln4XWXDvgjed5-J4kE:xOqRqfALt2CSyxSlV1Y9U3fLVAk=" 
+          alt="东里村" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60 flex flex-col justify-end p-6">
+           <header className="absolute top-4 left-4 right-4 flex justify-between items-center">
+            <div className="flex items-center gap-2 text-white">
+                <div className="text-white drop-shadow-md"><LocationIcon /></div>
+                <h1 className="text-xl font-bold drop-shadow-md">东里村智能体</h1>
+            </div>
+            <button className="px-3 py-1.5 text-sm font-medium text-white border border-white/50 rounded-full hover:bg-white/20 backdrop-blur-sm">村委管理</button>
+          </header>
+          <div className="text-white">
+             <h2 className="text-3xl font-bold mb-1">发现东里</h2>
+             <p className="opacity-90">追忆革命岁月 · 探寻花海山水</p>
+          </div>
         </div>
-        <button className="px-3 py-1.5 text-sm font-medium text-gray-600 border border-gray-300 rounded-full hover:bg-gray-100">村委管理</button>
-      </header>
-
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-900">发现东里</h2>
-        <p className="text-gray-500 mt-1">追忆革命岁月 · 探寻花海山水</p>
       </div>
 
-      <div>
+      <div className="p-4 -mt-4 relative z-10">
         {routesData.map(route => (
             <RouteCard key={route.id} route={route} onSelect={handleSelectAttraction}/>
         ))}
